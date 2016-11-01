@@ -81,6 +81,23 @@ openstack stack update -f yaml -t some_example.yaml -e environment.yaml
 ```
 
 ## Contribution Guidelines
+UKCloud welcomes contribtuions to this repository bot in terms of new
+examples and corrections, enhancements to existing ones. 
+
+If you spot a problem, first please raise an Issue in Github. We will
+attempt to fix the issue for you as soon as we are able.
+If you would like to submit your own patch for the issue then please go ahead
+and fork our repository then submit a Pull Request when you are happy
+with your work.
+
+### Contribution best practice
+
+* Follow the directory structure listed above
+* Treat readability of template files as a priority
+* Break resources out into child templates in the "resources/" directory
+  where appropriate
+* Do not use inline scripts. Always store scripts in the "files/"
+  directory and reference using the { get_file: } function
 
 ## License
 

@@ -81,8 +81,8 @@ openstack stack update -f yaml -t some_example.yaml -e environment.yaml
 ```
 
 ## Contribution Guidelines
-UKCloud welcomes contribtuions to this repository bot in terms of new
-examples and corrections, enhancements to existing ones. 
+UKCloud welcomes contribtuions to this repository both in terms of new
+examples and corrections or enhancements to existing ones. 
 
 If you spot a problem, first please raise an Issue in Github. We will
 attempt to fix the issue for you as soon as we are able.

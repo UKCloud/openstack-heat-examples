@@ -38,10 +38,48 @@ repository with a common structure:
 * some_example.yaml
  * The main template file to be run with the `openstack stack create`
    command
-
+* environment_example.yaml
+ * A sample environment.yaml file to be customised with parameters such
+   as network names etc
+* scripts/ (optional)
+ * A directory containing any scripts required to instantiate the
+   template
+* resources/ (optional)
+ * A directory containing any resource definitions which are defined
+   outside the main template file (e.g webserver_master.yaml)
 
 
 ## Running An Example
+To run an example first copy the environment_example.yaml file to
+environment.yaml and edit it to include your own settings:
+
+```
+cp environment_example.yaml environment.yaml
+vim environment.yaml
+```
+
+Then create the example using:
+
+```
+openstack stack create -f yaml -t some_example.yaml -e environment.yaml
+my_example
+```
+(where 'my_example' is a friendly name for the stack you want to create)
+
+Stack creation can take some time. To view progress run:
+```
+openstack stack show my_example
+```
+The stack is created once "stack_status" shows "CREATE_COMPLETE"
+
+
+If the example template supports being run multiple times then you can
+execute the following:
+WARNING!! Some update operations will delete & recreate resources in the
+stack. Use with caution
+```
+openstack stack update -f yaml -t some_example.yaml -e environment.yaml
+```
 
 ## Contribution Guidelines
 

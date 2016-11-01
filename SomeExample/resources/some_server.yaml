@@ -1,0 +1,8 @@
+heat_template_version: 2015-04-30
+
+resources:
+  server:
+    type: OS::Nova::Server
+    properties:
+      user_data: { get_file: files/some_script.sh }
+

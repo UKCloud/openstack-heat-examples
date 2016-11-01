@@ -1,0 +1,10 @@
+heat_template_version: 2015-04-30
+
+parameters:
+  some_parameter:
+    type: string
+
+
+resources:
+  some_resource:
+    type: resources/some_server.yaml

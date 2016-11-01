@@ -61,8 +61,7 @@ vim environment.yaml
 Then create the example using:
 
 ```
-openstack stack create -f yaml -t some_example.yaml -e environment.yaml
-my_example
+openstack stack create -f yaml -t some_example.yaml -e environment.yaml my_example
 ```
 (where 'my_example' is a friendly name for the stack you want to create)
 
@@ -75,8 +74,8 @@ The stack is created once "stack_status" shows "CREATE_COMPLETE"
 
 If the example template supports being run multiple times then you can
 execute the following:
-WARNING!! Some update operations will delete & recreate resources in the
-stack. Use with caution
+
+**WARNING!! Some update operations will delete & recreate resources in the stack. Use with caution**
 ```
 openstack stack update -f yaml -t some_example.yaml -e environment.yaml
 ```

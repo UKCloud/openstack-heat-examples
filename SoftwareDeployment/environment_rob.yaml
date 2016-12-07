@@ -1,5 +1,0 @@
-parameters:
-  flavor: t1.tiny
-  image: CentOS 7
-  key_name: RobC
-  network: Internal

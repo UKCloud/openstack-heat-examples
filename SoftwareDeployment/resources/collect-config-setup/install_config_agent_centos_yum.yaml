@@ -1,0 +1,34 @@
+heat_template_version: 2014-10-16
+
+resources:
+
+  install_config_agent_yum:
+    type: "OS::Heat::SoftwareConfig"
+    properties:
+      group: ungrouped
+      config: {get_file: files/install_config_agent_yum.sh}
+
+  configure_config_agent:
+    type: "OS::Heat::SoftwareConfig"
+    properties:
+      group: ungrouped
+      config:
+        get_file: files/configure_config_agent.sh
+
+  start_config_agent:
+    type: "OS::Heat::SoftwareConfig"
+    properties:
+      group: ungrouped
+      config: {get_file: files/start_config_agent.sh}
+
+  install_config_agent:
+    type: "OS::Heat::MultipartMime"
+    properties:
+      parts:
+      - config: {get_resource: install_config_agent_yum}
+      - config: {get_resource: configure_config_agent}
+      - config: {get_resource: start_config_agent}
+
+outputs:
+  config:
+    value: {get_resource: install_config_agent}

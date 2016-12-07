@@ -25,7 +25,7 @@ repository with a common structure:
 │   ├── some_example.yaml
 │   ├── environment_example.yaml
 │   │
-│   ├── scripts/
+│   ├── files/
 │   │   ├── some_script.sh
 │   │
 │   ├── resources/

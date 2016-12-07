@@ -98,6 +98,12 @@ mkdir -p $hooks_dir
 # install hook for configuring with shell scripts
 ln -s /usr/share/openstack-heat-templates/software-config/heat-container-agent/scripts/hooks/script $hooks_dir/script
 
+# Install ansible hook
+ln -s /usr/share/openstack-heat-templates/software-config/elements/heat-config-ansible/install.d/hook-ansible.py $hooks_dir/ansible
+
+# Update localhost ref as it attempts to SSH and fails
+sed -i 's/localhost,/localhost/g' $hooks_dir/ansible
+
 # install heat-config-notify command
 ln -s /usr/share/openstack-heat-templates/software-config/elements/heat-config/bin/heat-config-notify /usr/bin/heat-config-notify
 

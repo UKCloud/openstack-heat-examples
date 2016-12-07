@@ -36,7 +36,6 @@ resources:
   ssh_ext_secgroup:
     type: OS::Neutron::SecurityGroup
     properties:
-      name: ssh_ext_secgroup
       rules:
         - protocol: tcp
           remote_ip_prefix: 0.0.0.0/0
@@ -48,7 +47,7 @@ resources:
   server:
     type: OS::Nova::Server
     properties:
-      name: demo01
+      name: deploydemo
       flavor: { get_param: flavor }
       image: { get_param: image }
       key_name: { get_param: key_name }
@@ -63,7 +62,7 @@ resources:
   config_agent:
     type: resources/collect-config-setup/install_config_agent_centos_yum.yaml
 
-  software_config:
+  config:
     type: OS::Heat::SoftwareConfig
     properties:
       group: script
@@ -74,11 +73,11 @@ resources:
       - name: result
       config: { get_file: 'files/deploy.sh' }
 
-  deploy_config:
+  deployment:
     type: OS::Heat::SoftwareDeployment
     properties:
       config:
-        get_resource: software_config
+        get_resource: config
       server:
         get_resource: server
       input_values:
@@ -86,7 +85,15 @@ resources:
         lastname: User
 
 outputs:
-  deploy_output:
-    description: Stdout returned from deploying the config to the server
+  result:
     value:
-      get_attr: [ deploy_config, deploy_stdout ]
+      get_attr: [deployment, result]
+  stdout:
+    value:
+      get_attr: [deployment, deploy_stdout]
+  stderr:
+    value:
+      get_attr: [deployment, deploy_stderr]
+  status_code:
+    value:
+      get_attr: [deployment, deploy_status_code]

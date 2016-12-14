@@ -13,7 +13,7 @@ if ! yum info os-collect-config; then
         subscription-manager repos --enable="rhel-7-server-openstack-8-director-rpms"
         subscription-manager repos --enable="rhel-7-server-openstack-8-rpms"
     else
-        yum -y install centos-release-openstack-liberty
+        yum -y install centos-release-openstack-mitaka
     fi
 fi
 yum -y install os-collect-config python-zaqarclient os-refresh-config os-apply-config openstack-heat-templates python-oslo-log python-psutil ansible

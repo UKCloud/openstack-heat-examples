@@ -17,4 +17,3 @@ if ! yum info os-collect-config; then
     fi
 fi
 yum -y install os-collect-config python-zaqarclient os-refresh-config os-apply-config openstack-heat-templates python-oslo-log python-psutil ansible
-#yum-config-manager --disable 'epel*'

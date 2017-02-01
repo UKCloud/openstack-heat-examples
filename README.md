@@ -105,7 +105,7 @@ with your work.
 
 To create a virtual machine via HEAT which programmatically configures the HEAT ansible hook the following example code can be used.
 
-*Step 1 - setup HEAT resources*
+**Step 1 - setup HEAT resources**
 
 The process relies on additional HEAT resources to handle the installation of ansible and the HEAT ansible hook. You'll need to following files available to HEAT when you run your deployment:
 
@@ -116,7 +116,7 @@ files/configure_config_agent.sh
 files/start_config_agent.sh
 ```
 
-*Step 2 - setup your HEAT code to instantiaite the new resources*
+**Step 2 - setup your HEAT code to instantiaite the new resources**
 
 Within your HEAT when you instantiate the server you'll need to create a new resource.
 
@@ -143,7 +143,7 @@ When you create your server you'll need to reference the new resource as user_da
       user_data: { get_attr: [config_agent, config] }
 ```
 
-*Step 3 - add HEAT software deployment code to call the ansible hook inside the VM*
+**Step 3 - add HEAT software deployment code to call the ansible hook inside the VM**
 
 You can then define a group of ansible which will instruct HEAT to run your code on the VM using Ansible, e.g.
 

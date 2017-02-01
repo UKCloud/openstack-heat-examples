@@ -99,8 +99,84 @@ with your work.
 * Do not use inline scripts. Always store scripts in the "files/"
   directory and reference using the { get_file: } function
 
-## License
+## Examples
 
+### Ansible HEAT hooks
+
+To create a virtual machine via HEAT which programmatically configures the HEAT ansible hook the following example code can be used.
+
+*Step 1 - setup HEAT resources*
+
+The process relies on additional HEAT resources to handle the installation of ansible and the HEAT ansible hook. You'll need to following files available to HEAT when you run your deployment:
+
+```
+collect-config-setup/install_config_agent_centos_yum.yaml
+files/install_config_agent_yum.sh
+files/configure_config_agent.sh
+files/start_config_agent.sh
+```
+
+*Step 2 - setup your HEAT code to instantiaite the new resources*
+
+Within your HEAT when you instantiate the server you'll need to create a new resource.
+
+```
+  config_agent:
+    type: collect-config-setup/install_config_agent_centos_yum.yaml
+```
+
+When you create your server you'll need to reference the new resource as user_data, e.g.
+
+```
+  example_server:
+    type: OS::Nova::Server
+    properties:
+      name: example_server
+      flavor: { get_param: flavor }
+      image: { get_param: image }
+      key_name: { get_param: key_name }
+      networks:
+        - port: { get_resource: example_server_port0 }
+      security_groups:
+        - { get_resource: ssh_ext_secgroup }
+      user_data_format: SOFTWARE_CONFIG
+      user_data: { get_attr: [config_agent, config] }
+```
+
+*Step 3 - add HEAT software deployment code to call the ansible hook inside the VM*
+
+You can then define a group of ansible which will instruct HEAT to run your code on the VM using Ansible, e.g.
+
+Create a new software deployment block referencing your ansible code.
+
+```
+  ansible_config:
+    type: OS::Heat::SoftwareConfig
+    properties:
+      group: ansible
+      config:
+        str_replace:
+          template: { get_file: 'files/clone_git_repo_with_ansible.yaml' }
+          params:
+            _gitUrl_: { get_param: gitUrl }
+      outputs:
+      - name: result
+```
+
+Create a config block to specify specific parameters for the server you are targeting and link it to your VM.
+
+```
+  deploy_ansible_config:
+    type: OS::Heat::SoftwareDeployment
+    properties:
+      signal_transport: CFN_SIGNAL
+      config:
+        get_resource: ansible_config
+      server:
+        get_resource: example_server
+```
+
+## License
 Copyright 2016 UKCloud
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may
